@@ -1,0 +1,21 @@
+.block {
+  float: left;
+  width: 41px;
+  height: 40px;
+  border: 1px solid black;
+}
+
+.wall {
+  background-color: black;
+}
+
+
+.block {
+  text-align: center;
+  font-size: 32px;
+}
+
+.box {
+  font-size: 26px;
+  color: rgb(207, 163, 19);
+}
