@@ -1,6 +1,5 @@
 .block {
-  float: left;
-  width: 41px;
+  width: 40px;
   height: 40px;
   border: 1px solid black;
 }

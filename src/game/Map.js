@@ -1,48 +1,84 @@
-import CONFIG from './setting/config'
-import React from 'react';
-import './css/game.css';
+import {mapNames} from './setting/enums';
 
-class Map extends React.Component {
-  constructor () {
-    super ()
-      this.playerCounter = 0;
-      this.state = {
-        playerCounter: 0,
-      }
+class MakeMap {
+constructor (props) {
+  this.players = props.players;
+  this.bots = props.bots;
+  this.x = props.x;
+  this.y = props.y;
+}
+
+makeborder (x,y) {
+  const size = x * y;
+  const map = new Array(size).fill(0);
+  const {wall} = mapNames;
+
+  for (let i = 0; i < x; i++) {
+    map[i] = wall; 
   }
- 
-  render() {
-    const {map, setting} =  this.props;
-    const mapStyle = {
-      'display': 'grid',
-      'marginTop': '100px',
-      'justifyContent': 'center',
-      'gridTemplateColumns': `repeat(${setting.x}, 40px)`,
-      'gridTemplateRows': `repeat(${setting.y}, 40px)`,
+
+  for (let i = size - x; i < map.length; i++) {
+    map[i] = wall;
+  }
+
+  for (let i = 0; i < size - x ; i += x) {
+    map[i] = wall;
+  }
+
+  for (let i = size - 1; i > x ; i -= x) {
+    map[i] = wall;
+  }
+
+  return map;
+}
+
+addPlayers (map, players) {
+  let counter = 1;
+  const {player} = mapNames;
+  while (counter < players + 1) {
+    const randomIndex = Math.floor(Math.random() * map.length - 1);
+    if (map[randomIndex] === 0) {
+      map[randomIndex] = player + counter; // where Player = 'P' and counter is number of player;
+      counter++;
     }
-   
-    let playerCounter = 0;
-    return (
-      <div style={mapStyle} className='map'>
-          {map.map( (block, index) => {
-            switch (block) {
-              case CONFIG.map.wall:
-                return <div key={index} id={index} className='block wall'></div>;
-              case 0:
-                return <div key={index} id={index} className='block empty'></div>;
-              case CONFIG.map.player:
-            return <div key={index} id={index} className='block player'>{map[index] + ++playerCounter}</div>;
-              case CONFIG.map.bot:
-                return <div key={index} id={index} className='block bot'>M</div>;
-              case CONFIG.map.box:
-                return <div key={index} id={index} className='block box'>[X]</div>;
-              default:
-                return <div key={index} id={index} className='block empty'></div>;
-            }
-          })}
-      </div>
-    )
   }
 }
 
-export default Map;
+addBots (map, bots) {
+  let counter = 0;
+  const {bot} = mapNames;
+  while (counter < bots) {
+    const randomIndex = Math.floor(Math.random() * map.length - 1);
+    if (map[randomIndex] === 0) {
+      map[randomIndex] = bot; // where bot = 'M';
+      counter++;
+    }
+  }
+}
+
+addBoxes (map) {
+  const boxes = Math.floor(map.length / 10);
+  let counter = 0;
+  const {box} = mapNames;
+  while (counter < boxes) {
+    const randomIndex = Math.floor(Math.random() * map.length - 1);
+    if (map[randomIndex] === 0) {
+      map[randomIndex] = box; 
+      counter++;
+    }
+  }
+}
+
+
+makemap () {
+ let map =  this.makeborder(this.x, this.y);
+ this.addPlayers(map, this.players);
+ this.addBots(map, this.bots);
+ this.addBoxes(map);
+
+ return map;
+}
+
+};
+
+export default MakeMap;

@@ -1,4 +1,6 @@
-.setting__container {
+.game__container {
+  display: flex;
+  flex-direction: column;
   margin: 60px auto;
   text-align: center;
   width: 600px;
@@ -8,7 +10,8 @@
 }
 
 .setting__container_menu {
-  margin-top: 100px;
+  margin: 100px auto;
+  width: 400px;
   display: inline-block;
   box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
 }
@@ -32,15 +35,18 @@
   font-size: 15px;
 }
 
-.setting__container__menu_start {
+.game__container__menu_start {
+  position: relative;
+  bottom: 80px ;
+  width: 150px;
+  margin: 0 auto;
   font-size: 30px;
   background-color: rgb(245, 211, 149);
   cursor: pointer;
-  margin-bottom: 5px;
   transition: 2s;
 }
 
-.setting__container__menu_start:hover {
+.game__container__menu_start:hover {
   background-color: rgb(65, 43, 4);
   color: white;
 }
